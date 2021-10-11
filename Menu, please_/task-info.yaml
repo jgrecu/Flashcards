@@ -856,6 +856,12 @@ files:
         }
     }
   learner_created: true
+- name: src/flashcards/FlashcardMenu.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/44/stages/236/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Mon, 11 Oct 2021 13:48:29 UTC
 record: -1
