@@ -825,6 +825,37 @@ files:
 
     }
   learner_created: false
+- name: src/flashcards/Flashcard.java
+  visible: true
+  text: |
+    package flashcards;
+
+    public class Flashcard {
+        private String term;
+        private String definition;
+
+        public Flashcard(String term, String definition) {
+            this.term = term;
+            this.definition = definition;
+        }
+
+        public String getTerm() {
+            return term;
+        }
+
+        public void setTerm(String term) {
+            this.term = term;
+        }
+
+        public String getDefinition() {
+            return definition;
+        }
+
+        public void setDefinition(String definition) {
+            this.definition = definition;
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/44/stages/236/implement#comment
 status: Unchecked
 record: -1
