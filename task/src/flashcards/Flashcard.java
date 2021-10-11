@@ -31,6 +31,10 @@ public class Flashcard {
         return wrongAnswers;
     }
 
+    public void addWrongAnswer() {
+        this.wrongAnswers++;
+    }
+
     public void setWrongAnswers(int wrongAnswers) {
         this.wrongAnswers = wrongAnswers;
     }
