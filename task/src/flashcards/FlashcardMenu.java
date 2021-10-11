@@ -162,7 +162,8 @@ public class FlashcardMenu {
         printMessage("Which card?");
         String term = getInput();
         if (flashcards.stream().anyMatch(o -> term.equals(o.getTerm()))) {
-            Flashcard flashcard = flashcards.stream().filter(o -> term.equals(o.getTerm())).findFirst().orElse(null);
+            Flashcard flashcard = flashcards.stream().filter(o -> term.equals(o.getTerm()))
+                    .findFirst().orElse(null);
             flashcards.remove(flashcard);
             printMessage("The card has been removed.");
         } else {
