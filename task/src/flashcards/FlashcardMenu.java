@@ -71,13 +71,7 @@ public class FlashcardMenu {
     }
 
     private void printHardestCard() {
-        int max = 0;
-        for (Flashcard flashcard : flashcards) {
-            int wrongAnswers = flashcard.getWrongAnswers();
-            if (wrongAnswers > max) {
-                max = flashcard.getWrongAnswers();
-            }
-        }
+        int max =  flashcards.stream().map(Flashcard::getWrongAnswers).max(Integer::compareTo).get();
 
         if (max == 0) {
             printMessage("There are no cards with errors.");
