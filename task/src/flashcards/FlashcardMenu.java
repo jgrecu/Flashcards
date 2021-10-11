@@ -3,9 +3,7 @@ package flashcards;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FlashcardMenu {
@@ -14,14 +12,26 @@ public class FlashcardMenu {
     private final Scanner scanner = new Scanner(System.in);
     private final List<Flashcard> flashcards;
     private final List<String> logs;
+    private final Map<String, String> argMap;
 
     public FlashcardMenu() {
         this.flashcards = new ArrayList<>();
         this.logs = new ArrayList<>();
+        this.argMap = new HashMap<>();
     }
 
-    public void start() {
+    public void start(String[] args) {
+        mapArgs(args);
+        if (argMap.containsKey("-import")) {
+            importFromFile(argMap.get("-import"));
+        }
         run();
+    }
+
+    private void mapArgs(String[] args) {
+        for (int i = 1; i < args.length; i++) {
+            argMap.put(args[i - 1].toLowerCase(), args[i]);
+        }
     }
 
     private void run() {
@@ -47,6 +57,9 @@ public class FlashcardMenu {
                     break;
                 case "exit":
                     printMessage("Bye bye!");
+                    if (argMap.containsKey("-export")) {
+                        exportToFile(argMap.get("-export"));
+                    }
                     scanner.close();
                     gameOn = false;
                     break;
@@ -71,7 +84,7 @@ public class FlashcardMenu {
     }
 
     private void printHardestCard() {
-        int max =  flashcards.stream().map(Flashcard::getWrongAnswers).max(Integer::compareTo).get();
+        int max =  flashcards.stream().map(Flashcard::getWrongAnswers).max(Integer::compareTo).orElse(0);
 
         if (max == 0) {
             printMessage("There are no cards with errors.");
@@ -124,9 +137,51 @@ public class FlashcardMenu {
         }
     }
 
+    private void exportToFile(String fileName) {
+        File file = new File(fileName);
+        try (PrintWriter printWriter = new PrintWriter(file)) {
+            int n = 0;
+            for (Flashcard flashcard : flashcards) {
+                printWriter.println(flashcard.getTerm() + ":" + flashcard.getDefinition() + ":"
+                        + flashcard.getWrongAnswers());
+                n++;
+            }
+            String output = String.format("%d cards have been saved.", n);
+            printMessage(output);
+        } catch (FileNotFoundException e) {
+            printMessage(FILE_NOT_FOUND);
+        }
+    }
+
     private void importFromFile() {
         printMessage(FILE_NAME);
         String fileName = getInput();
+        File file = new File(fileName);
+        try (Scanner sc = new Scanner(file)) {
+            int n = 0;
+            while (sc.hasNext()) {
+                String[] card = sc.nextLine().strip().split(":");
+                String term = card[0];
+                String definition = card[1];
+                int wrongAnswers = Integer.parseInt(card[2]);
+                if (flashcards.stream().anyMatch(o -> term.equals(o.getTerm()))) {
+                    Flashcard flashcard = flashcards.stream().filter(o -> term.equals(o.getTerm()))
+                            .findFirst().orElse(null);
+                    flashcards.remove(flashcard);
+                }
+                Flashcard newFlashcard = new Flashcard(term, definition);
+                newFlashcard.setWrongAnswers(wrongAnswers);
+                flashcards.add(newFlashcard);
+                n++;
+            }
+            String output = String.format("%d cards have been loaded.", n);
+            printMessage(output);
+        } catch (FileNotFoundException e) {
+            printMessage(FILE_NOT_FOUND);
+        }
+    }
+
+    private void importFromFile(String fileName) {
         File file = new File(fileName);
         try (Scanner sc = new Scanner(file)) {
             int n = 0;
