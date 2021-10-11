@@ -206,6 +206,12 @@ files:
     \ of one\",\n                \"a part of the body where the foot meet\"\n    \
     \    );\n    }\n}\n"
   learner_created: false
+- name: src/flashcards/Flashcard.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/44/stages/234/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 09 Oct 2021 13:28:59 UTC
+record: 3

@@ -245,6 +245,40 @@ files:
     \  \"a brother of one\",\n                \"a part of the body where the foot\
     \ meet\"\n        );\n    }\n    \n}\n"
   learner_created: false
+- name: src/flashcards/Flashcard.java
+  visible: true
+  text: |
+    package flashcards;
+
+    public class Flashcard {
+        private String term;
+        private String definition;
+
+        public Flashcard(String term, String definition) {
+            this.term = term;
+            this.definition = definition;
+        }
+
+        public String getTerm() {
+            return term;
+        }
+
+        public void setTerm(String term) {
+            this.term = term;
+        }
+
+        public String getDefinition() {
+            return definition;
+        }
+
+        public void setDefinition(String definition) {
+            this.definition = definition;
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/44/stages/235/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Mon, 11 Oct 2021 08:55:19 UTC
 record: -1
